@@ -118,8 +118,8 @@
                 
                 $("#btn_cek").click(function() {
                     salah = new Array();
-                    var ko = 0;
                     
+                    $(".grid__item").removeClass("input-salah");
                     $(".tanya").removeClass("salah");
                     $(".tanya").addClass("benar");
                     
@@ -128,7 +128,12 @@
                         var kurang = 0;
                         
                         $.each(jwb_data, function(index2, value2) {
-                            if(kotak_data[value2[0]][value2[1]][4] != kotak_data[value2[0]][value2[1]][5]) kurang++;
+                            if(true) {
+                                if(kotak_data[value2[0]][value2[1]][4] != kotak_data[value2[0]][value2[1]][5]) {
+                                    kurang++;
+                                    $(".grid_"+value2[0]+"_"+value2[1]).addClass("input-salah");
+                                }
+                            }
                         });
                         
                         if(kurang>0) salah.push(index);
