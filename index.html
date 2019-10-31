@@ -12,12 +12,16 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-2">
-                       
+                       <b>Skor: </b> <i id="skor">0</i>
+                        <hr>
+                         <a href="#" class="btn btn-primary" id="btn_cek">Cek jawaban</a>
+                        <hr>
                         <h6><u>Mendatar</u></h6>
                         <div id="mendatar"></div>
                         <h6><u>Menurun</u></h6>
                         <div id="menurun"></div>
-                         <a href="#" class="btn btn-primary" id="btn_cek">Cek jawaban</a>
+                        <hr>
+
                         <div id="koteka"></div>
                     </div>
                     
@@ -38,6 +42,8 @@
                 var jml_kotak = 15;
                 var blok=true;
                 var a;
+                var skor = 0;
+                var total_skor = 0;
                 
                 var kotak_data = new Array();
                 var jawaban = new Array();
@@ -57,6 +63,7 @@
                         kotak_data[i][j][3] = -1;       //isi caption
                         kotak_data[i][j][4] = "";
                         kotak_data[i][j][5] = "";
+                        total_skor++;
                     }
                 }
                 
@@ -108,6 +115,8 @@
                     }
                 }
                 
+                $("#skor").html(skor+"/"+total_skor);
+
                 $(".for-tts").on('input propertychange paste', function() {
                     var huruf   = $(this).val().toUpperCase();
                     var row     = $(this).attr("row");
@@ -128,18 +137,16 @@
                         var kurang = 0;
                         
                         $.each(jwb_data, function(index2, value2) {
-                            if(true) {
-                                if(kotak_data[value2[0]][value2[1]][4] != kotak_data[value2[0]][value2[1]][5]) {
-                                    kurang++;
-                                    $(".grid_"+value2[0]+"_"+value2[1]).addClass("input-salah");
-                                }
-                            }
+                            if(kotak_data[value2[0]][value2[1]][4] != kotak_data[value2[0]][value2[1]][5]) {
+                                kurang++;
+                                $(".grid_"+value2[0]+"_"+value2[1]).addClass("input-salah");
+                            } else skor++;
                         });
                         
                         if(kurang>0) salah.push(index);
                     });
-                    
-                    console.log(salah);
+
+                    $("#skor").html(skor+"/"+total_skor);
                     
                     $.each(salah, function(i, v) {
                         $("#q"+v).removeClass("benar");
